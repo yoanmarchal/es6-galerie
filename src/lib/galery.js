@@ -13,6 +13,7 @@ export class Galerie {
     this.current = 0
 
     this.galleriewrapper = document.querySelector(galleriewrapper)
+    this.container = this.galleriewrapper.querySelector('.glide_showcase')
     this.initCarousel(galleriewrapper)
   }
 
@@ -76,14 +77,16 @@ export class Galerie {
     this.url = null
     const image = new Image()
 
-    this.container = this.galleriewrapper.querySelector('.glide_showcase')
     this.setGalerieHeight()
 
     const loader = document.createElement('div')
     loader.classList.add('glide__loader')
     this.container.innerHTML = ''
     this.container.appendChild(loader)
+    console.log(this);
+    
     image.onload = () => {
+      console.log(this);
       this.container.removeChild(loader)
       this.container.appendChild(image)
       this.setGalerieHeight()
@@ -99,12 +102,26 @@ export class Galerie {
     }
     this.images = this.items.map(item => item.querySelector('img'))
 
-    this.images.forEach(item => item.addEventListener('click', e => {
-      this.click(e)
-    }))
+    const el = document.querySelector('.glide__track');
+  
+    el.addEventListener('click', e => {
+      this.clickHandler(e)
+    })
+
+    // this.images.forEach(item => item.addEventListener('click', e => {
+    //   this.click(e)
+    // }))
     window.onresize = () => {
       this.setGalerieHeight()
     };
+  }
+
+  clickHandler(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (e.target.matches('img')) {
+      this.setFeatured(e.target)
+    }
   }
 
   setGalerieHeight () {
@@ -135,21 +152,6 @@ export class Galerie {
     // identifier limage large 
     // charger limage
     // la mettre dans le conteneur
-  }
-
-  /**
-   * @param  {Object} event
-   */
-  click (e) {
-
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.debugMode) {
-      console.log('item click event: ', e)
-      console.log('item click event.target: ', e.target)
-    }
-    this.setFeatured(e.target)
   }
 
   /**
