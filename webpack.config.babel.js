@@ -1,7 +1,7 @@
-const path = require('path');
-const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const config = require('config');
+const path = require('path')
+const webpack = require('webpack')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const config = require('config')
 
 
 /*-------------------------------------------------*/
@@ -31,7 +31,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
-        }  
+        }
+      },
+      {
+        test: /\.svg/,
+        use: {
+          loader: 'svg-url-loader',
+          options: {}
+        }
       },
       {
         test: /\.scss$/,
@@ -57,5 +64,5 @@ module.exports = {
   },
 
   // generate source map
-  devtool: ('production' === process.env.NODE_ENV ? 'source-map' : 'cheap-module-eval-source-map'),
-};
+  devtool: (process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map')
+}

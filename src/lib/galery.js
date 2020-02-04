@@ -6,15 +6,11 @@ import Glide, { Controls, Breakpoints, Anchors, Swipe, Images } from '@glidejs/g
  */
 
 export class Galerie {
+
   constructor (galleriewrapper, { debug = false } = {}) {
     this.debugMode = debug
     this.items = Array.from(document.querySelectorAll('.glide__slide'))
     this.current = 0
-    this.images = this.items.map(item => item.querySelector('img'))
-
-    this.images.forEach(item => item.addEventListener('click', e => {
-      this.click(e)
-    }))
 
     this.galleriewrapper = document.querySelector(galleriewrapper)
     this.initCarousel(galleriewrapper)
@@ -24,31 +20,34 @@ export class Galerie {
    * @param {string} galleriewrapper
    */
   initCarousel (galleriewrapper) {
+
     this.carousel = new Glide(this.galleriewrapper, {
       type: 'carousel',
       startAt: 0,
-      perView: 13,
+      perView: 9,
       peek: {
         before: 100,
         after: 100
       },
       breakpoints: {
         1024: {
-          perView: 11
+          perView: 10
         },
         600: {
           perView: 5
         }
       },
-      gap: 10
+      gap: 1
     })
 
     this.carousel.on(['mount.after', 'run'], () => {
       // Logic fired after mounting
       if (this.debugMode) {
         console.log('mount.after run', this.carousel.index)
-        console.log('click', this.images[this.carousel.index])
       }
+      console.log('here');
+      
+      this.setEvents()
     })
 
     this.carousel.on('update', function (e) {
@@ -59,6 +58,7 @@ export class Galerie {
     })
 
     this.loadImage(this.items[0].querySelector('img').dataset.large)
+    
     this.carousel.mount({ Controls, Breakpoints, Anchors, Swipe, Images })
 
     if (this.debugMode) {
@@ -75,22 +75,52 @@ export class Galerie {
     }
     this.url = null
     const image = new Image()
-    const container = this.galleriewrapper.querySelector('.glide_showcase')
-    // set the container to the height of img to prevent move of container
-    if (container.querySelector('img')) {
-      container.style.height = container.offsetHeight + 'px'
-    }
+
+    this.container = this.galleriewrapper.querySelector('.glide_showcase')
+    this.setGalerieHeight()
 
     const loader = document.createElement('div')
     loader.classList.add('glide__loader')
-    container.innerHTML = ''
-    container.appendChild(loader)
+    this.container.innerHTML = ''
+    this.container.appendChild(loader)
     image.onload = () => {
-      container.removeChild(loader)
-      container.appendChild(image)
+      this.container.removeChild(loader)
+      this.container.appendChild(image)
+      this.setGalerieHeight()
+      //this.resetGalerieHeight()
       this.url = url
     }
     image.src = url
+  }
+
+  setEvents () {
+    if (this.debugMode) {
+      console.log('set Events')
+    }
+    this.images = this.items.map(item => item.querySelector('img'))
+
+    this.images.forEach(item => item.addEventListener('click', e => {
+      this.click(e)
+    }))
+    window.onresize = () => {
+      this.setGalerieHeight()
+    };
+  }
+
+  setGalerieHeight () {
+    
+    // set the container to the height of img to prevent move of container
+    if (this.container.querySelector('img')) {
+
+      this.current = this.container.querySelector('img')
+      console.log('set  galerie height', this.container );
+      
+      this.container.style.height = this.current.offsetHeight + 'px'
+    }
+  }
+
+  resetGalerieHeight () {
+    this.container.style.height = 'auto'
   }
 
   /**
@@ -101,9 +131,8 @@ export class Galerie {
       console.log('setFeatured(target)', target)
       console.log(target.dataset.large)
     }
-
     this.loadImage(target.dataset.large)
-    // identifier limage large
+    // identifier limage large 
     // charger limage
     // la mettre dans le conteneur
   }
@@ -112,8 +141,9 @@ export class Galerie {
    * @param  {Object} event
    */
   click (e) {
-    e.stopPropagation()
-    e.preventDefault()
+
+    e.stopPropagation();
+    e.preventDefault();
 
     if (this.debugMode) {
       console.log('item click event: ', e)

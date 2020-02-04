@@ -1,23 +1,43 @@
-@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+
 .sr-only {
 	border: 0 !important;
 	clip: rect(1px, 1px, 1px, 1px) !important;
 	-webkit-clip-path: inset(50%) !important;
-			clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important;
 	height: 1px !important;
 	overflow: hidden !important;
 	padding: 0 !important;
 	position: absolute !important;
 	width: 1px !important;
 	white-space: nowrap !important;
-  }
+}
 
 .glide__slides {
 	padding: 0;
 	margin: 0;
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	.glide__slide--active {
+		box-shadow: 0 0;
+	}
 }
 
-.glide_showcase img {
-	max-width: 100%;
-	height: auto;
+
+.glide_showcase {
+	display: block;
+	margin-bottom: 1px;
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+.glide__loader {
+	background-image: url('../img/loader.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 2em 2em;
+	height: 100%;
 }
