@@ -7,13 +7,16 @@ import Glide, { Controls, Breakpoints, Anchors, Swipe, Images } from '@glidejs/g
 
 export class Galerie {
 
+  /**
+   * @param {object} galleriewrapper
+   */
   constructor (galleriewrapper, { debug = false } = {}) {
     this.debugMode = debug
     this.items = Array.from(document.querySelectorAll('.glide__slide'))
     this.current = 0
 
-    this.galleriewrapper = document.querySelector(galleriewrapper)
-    this.container = this.galleriewrapper.querySelector('.glide_showcase')
+    this.galleriewrapper = galleriewrapper
+    this.showcase = this.galleriewrapper.querySelector('.glide_showcase')
     this.initCarousel(galleriewrapper)
   }
 
@@ -76,21 +79,23 @@ export class Galerie {
     }
     this.url = null
     const image = new Image()
+    const container = this.galleriewrapper.querySelector('.glide_showcase')
 
     this.setGalerieHeight()
 
     const loader = document.createElement('div')
     loader.classList.add('glide__loader')
-    this.container.innerHTML = ''
-    this.container.appendChild(loader)
-    console.log(this);
+    container.innerHTML = ''
+    container.appendChild(loader)
     
     image.onload = () => {
-      console.log(this);
-      this.container.removeChild(loader)
-      this.container.appendChild(image)
+
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+
+      container.appendChild(image)
       this.setGalerieHeight()
-      //this.resetGalerieHeight()
       this.url = url
     }
     image.src = url
@@ -102,17 +107,14 @@ export class Galerie {
     }
     this.images = this.items.map(item => item.querySelector('img'))
 
-    const el = document.querySelector('.glide__track');
-  
-    el.addEventListener('click', e => {
+    this.galleriewrapper.querySelector('.glide__track').addEventListener('click', e => {
       this.clickHandler(e)
     })
 
-    // this.images.forEach(item => item.addEventListener('click', e => {
-    //   this.click(e)
-    // }))
-    window.onresize = () => {
-      this.setGalerieHeight()
+    window.onresize = (e) => {
+      clearTimeout(this.timeout);
+      // start timing for event "completion"
+      this.timeout = setTimeout(this.setGalerieHeight(), 250);
     };
   }
 
@@ -127,12 +129,12 @@ export class Galerie {
   setGalerieHeight () {
     
     // set the container to the height of img to prevent move of container
-    if (this.container.querySelector('img')) {
+    if (this.showcase.querySelector('img')) {
 
-      this.current = this.container.querySelector('img')
-      console.log('set  galerie height', this.container );
+      this.current = this.showcase.querySelector('img')
+      console.log('set  galerie height', this.showcase );
       
-      this.container.style.height = this.current.offsetHeight + 'px'
+      this.showcase.style.height = this.current.offsetHeight + 'px'
     }
   }
 
@@ -149,9 +151,6 @@ export class Galerie {
       console.log(target.dataset.large)
     }
     this.loadImage(target.dataset.large)
-    // identifier limage large 
-    // charger limage
-    // la mettre dans le conteneur
   }
 
   /**
