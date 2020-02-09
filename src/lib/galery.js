@@ -1,31 +1,31 @@
 import Glide, { Controls, Breakpoints, Anchors, Swipe, Images } from '@glidejs/glide/dist/glide.modular.esm.js'
 
 /**
- * @class Gallerie
- * @param {string} galleriewrapper
+ * @class Galerie
+ * @param {string} galeriewrapper
  */
 
 export class Galerie {
 
   /**
-   * @param {object} galleriewrapper
+   * @param {object} galeriewrapper
    */
-  constructor (galleriewrapper, { debug = false } = {}) {
+  constructor (galeriewrapper, { debug = false } = {}) {
     this.debugMode = debug
-    this.items = Array.from(document.querySelectorAll('.glide__slide'))
+    
     this.current = 0
-
-    this.galleriewrapper = galleriewrapper
-    this.showcase = this.galleriewrapper.querySelector('.glide_showcase')
-    this.initCarousel(galleriewrapper)
+    this.galeriewrapper = galeriewrapper
+    this.showcase = this.galeriewrapper.querySelector('.glide_showcase')
+    this.items = Array.from(this.galeriewrapper.querySelectorAll('.glide__slide'))
+    this.initCarousel(galeriewrapper)
   }
 
   /**
-   * @param {string} galleriewrapper
+   * @param {object} galeriewrapper
    */
-  initCarousel (galleriewrapper) {
+  initCarousel (galeriewrapper) {
 
-    this.carousel = new Glide(this.galleriewrapper, {
+    this.carousel = new Glide(this.galeriewrapper, {
       type: 'carousel',
       startAt: 0,
       perView: 9,
@@ -49,7 +49,6 @@ export class Galerie {
       if (this.debugMode) {
         console.log('mount.after run', this.carousel.index)
       }
-      console.log('here');
       
       this.setEvents()
     })
@@ -79,7 +78,7 @@ export class Galerie {
     }
     this.url = null
     const image = new Image()
-    const container = this.galleriewrapper.querySelector('.glide_showcase')
+    const container = this.galeriewrapper.querySelector('.glide_showcase')
 
     this.setGalerieHeight()
 
@@ -107,7 +106,7 @@ export class Galerie {
     }
     this.images = this.items.map(item => item.querySelector('img'))
 
-    this.galleriewrapper.querySelector('.glide__track').addEventListener('click', e => {
+    this.galeriewrapper.querySelector('.glide__track').addEventListener('click', e => {
       this.clickHandler(e)
     })
 
