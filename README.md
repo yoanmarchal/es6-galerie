@@ -1,7 +1,7 @@
 # es6 galerie 
 es6 wepack 4 babel ie 11 compat test
 
-> Here, `dest` is your destination directory in which the boilerplate code will be copied.
+> Here, `dist` is your destination directory in which the boilerplate code will be copied.
 
 # Instructions
 - Use `npm install` command to install dependencies.
