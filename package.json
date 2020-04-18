@@ -46,7 +46,7 @@
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.10.3",
     "svg-url-loader": "5.0.0",
-    "core-js": "3.6.4",
+    "core-js": "3.6.5",
     "regenerator-runtime": "0.13.5"
   },
   "dependencies": {
