@@ -1,11 +1,6 @@
 import Glide, { Controls, Breakpoints, Anchors, Swipe, Images } from '@glidejs/glide/dist/glide.modular.esm.js'
 
-/**
- * @class Galerie
- * @param {string} galeriewrapper
- */
-
-export class Galerie {
+export default class Galerie {
 
   /**
    * @param {object} galeriewrapper
