@@ -11,7 +11,7 @@
     "@babel/core": "7.12.3",
     "@babel/preset-env": "7.12.1",
     "@rollup/plugin-commonjs": "16.0.0",
-    "@rollup/plugin-node-resolve": "9.0.0",
+    "@rollup/plugin-node-resolve": "10.0.0",
     "core-js": "3.6.5",
     "http-server": "0.12.3",
     "regenerator-runtime": "0.13.7",
