@@ -5,7 +5,7 @@
   "module": "dist/galerie.esm.js",
   "browser": "dist/galerie.umd.js",
   "dependencies": {
-    "@glidejs/glide": "3.4.1"
+    "@glidejs/glide": "3.6.2"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
