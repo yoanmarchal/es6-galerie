@@ -13,7 +13,7 @@
     "@rollup/plugin-commonjs": "17.0.0",
     "@rollup/plugin-node-resolve": "11.0.1",
     "core-js": "3.8.2",
-    "http-server": "0.12.3",
+    "http-server": "0.13.0",
     "regenerator-runtime": "0.13.7",
     "rollup": "2.36.1",
     "rollup-plugin-babel": "4.4.0",
